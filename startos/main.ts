@@ -19,10 +19,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
     ),
     exec: {
       command: ['/usr/local/bin/docker-entrypoint.sh', 'unifi'],
-      runAsInit: true,
     },
     ready: {
       display: i18n('Web Interface'),
+      gracePeriod: 180_000,
       fn: () =>
         sdk.healthCheck.checkPortListening(effects, uiPort, {
           successMessage: i18n('The web interface is ready'),

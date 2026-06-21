@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'unifi-network-application',
   title: 'UniFi Network Application',
   license: 'MIT',
-  packageRepo: 'https://github.com/YOUR_GITHUB_USERNAME/unifi-startos',
+  packageRepo: 'https://github.com/pang396/unifi-startos',
   upstreamRepo: 'https://github.com/jacobalberty/unifi-docker',
   marketingUrl: 'https://www.ui.com/',
   donationUrl: null,
