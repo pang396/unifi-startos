@@ -1,6 +1,7 @@
 import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { uiPort } from './utils'
+import { deviceCommandPort } from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting UniFi Network Application!'))
@@ -18,13 +19,13 @@ export const main = sdk.setupMain(async ({ effects }) => {
       'unifi-sub',
     ),
     exec: {
-      command: ['/usr/local/bin/docker-entrypoint.sh', 'unifi'],
+command: ['sh', '-c', 'mkdir -p /unifi/run && exec /usr/local/bin/docker-entrypoint.sh unifi'],
     },
     ready: {
       display: i18n('Web Interface'),
       gracePeriod: 180_000,
-      fn: () =>
-        sdk.healthCheck.checkPortListening(effects, uiPort, {
+fn: () =>
+  sdk.healthCheck.checkPortListening(effects, uiPort, {
           successMessage: i18n('The web interface is ready'),
           errorMessage: i18n('The web interface is not ready'),
         }),

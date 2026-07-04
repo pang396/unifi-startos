@@ -8,10 +8,13 @@ import {
 } from './utils'
 
 export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
-  // Web UI (HTTPS)
+// Web UI (HTTPS passthrough)
   const uiMulti = sdk.MultiHost.of(effects, 'ui-multi')
   const uiMultiOrigin = await uiMulti.bindPort(uiPort, {
-    protocol: 'https',
+    protocol: null,
+    addSsl: null,
+    secure: { ssl: true },
+    preferredExternalPort: uiPort,
   })
   const ui = sdk.createInterface(effects, {
     name: i18n('Web UI'),
@@ -19,13 +22,12 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     description: i18n('The UniFi Network Application web interface'),
     type: 'ui',
     masked: false,
-    schemeOverride: null,
+    schemeOverride: { ssl: 'https', noSsl: 'https' },
     username: null,
     path: '',
     query: {},
   })
   const uiReceipt = await uiMultiOrigin.export([ui])
-
   // Device command/control (TCP 8080)
   const deviceMulti = sdk.MultiHost.of(effects, 'device-multi')
   const deviceMultiOrigin = await deviceMulti.bindPort(deviceCommandPort, {
