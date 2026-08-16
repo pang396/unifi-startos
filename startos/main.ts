@@ -7,7 +7,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting UniFi Network Application!'))
 
   return sdk.Daemons.of(effects).addDaemon('primary', {
-    subcontainer: await sdk.SubContainer.of(
+    subcontainer: sdk.SubContainer.of(
       effects,
       { imageId: 'unifi' },
       sdk.Mounts.of().mountVolume({
@@ -19,13 +19,13 @@ export const main = sdk.setupMain(async ({ effects }) => {
       'unifi-sub',
     ),
     exec: {
-command: ['sh', '-c', 'mkdir -p /unifi/run && exec /usr/local/bin/docker-entrypoint.sh unifi'],
+      command: ['sh', '-c', 'mkdir -p /unifi/run && exec /usr/local/bin/docker-entrypoint.sh unifi'],
     },
     ready: {
       display: i18n('Web Interface'),
       gracePeriod: 180_000,
-fn: () =>
-  sdk.healthCheck.checkPortListening(effects, uiPort, {
+      fn: () =>
+        sdk.healthCheck.checkPortListening(effects, uiPort, {
           successMessage: i18n('The web interface is ready'),
           errorMessage: i18n('The web interface is not ready'),
         }),

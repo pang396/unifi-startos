@@ -34,7 +34,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     protocol: null,
     preferredExternalPort: deviceCommandPort,
     addSsl: null,
-    secure: null,
+    secure: { ssl: false }, // was: secure: null,
   })
   const device = sdk.createInterface(effects, {
     name: i18n('Device Inform'),
@@ -55,7 +55,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     protocol: null,
     preferredExternalPort: stunPort,
     addSsl: null,
-    secure: null,
+    secure: { ssl: false }, // was: secure: null,
   })
   const stun = sdk.createInterface(effects, {
     name: i18n('STUN'),
@@ -76,7 +76,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     protocol: null,
     preferredExternalPort: discoveryPort,
     addSsl: null,
-    secure: null,
+    secure: { ssl: false }, // was: secure: null,
   })
   const discovery = sdk.createInterface(effects, {
     name: i18n('Device Discovery'),
